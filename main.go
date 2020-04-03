@@ -14,6 +14,7 @@ func main() {
 	var name string
 	var clientId string
 	var awsRegion string
+	var refreshToken string
 
 	command := &cobra.Command{
 		Use: "qndcognito",
@@ -67,6 +68,27 @@ func main() {
 	loginCommand.Flags().StringVarP(&awsRegion,	"region",	"",	"",	"aws region the conginot account resides in")
 
 	command.AddCommand(loginCommand)
+
+
+	refreshCommand := &cobra.Command{
+		Use: "refresh [params]",
+		Short: "Refresh an existing access token",
+		Long: "Refresh an existing access token",
+		Run: func(cmd *cobra.Command, args []string) {
+			config := CognitoConfig{
+				ClientId: clientId,
+				AwsRegion: awsRegion,
+			}
+
+			Refresh(refreshToken, config)
+		},
+	}
+
+	refreshCommand.Flags().StringVarP(&refreshToken,	"refresh_token",	"",	"",	"Cognito refresh token")
+	refreshCommand.Flags().StringVarP(&clientId,		"clientid",	"",	"",	"aws cognito client id")
+	refreshCommand.Flags().StringVarP(&awsRegion,		"region",	"",	"",	"aws region the conginot account resides in")
+
+	command.AddCommand(refreshCommand)
 
 	if err := command.Execute(); err != nil {
 		log.Fatal(err)
