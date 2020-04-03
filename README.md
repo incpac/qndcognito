@@ -1,3 +1,3 @@
-# Cognito CLI
+# Quick'n'dirty AWS Cognito CLI
 
-CLI to manage AWS Cognito users
+A quick'n'dirty CLI interface for AWS Congito

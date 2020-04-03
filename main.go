@@ -38,10 +38,10 @@ func main() {
 		},
 	}
 
-	createCommand.Flags().StringVarP(&email,		"email",	"",	"",	"email address of the user")
-	createCommand.Flags().StringVarP(&password,		"password",	"",	"",	"password for the user")
-	createCommand.Flags().StringVarP(&name,			"name",		"", "", "full name of the user")
-	createCommand.Flags().StringVarP(&clientId,		"clientid",	"",	"",	"aws cognito client id")
+	createCommand.Flags().StringVarP(&email,	"email",	"",	"",	"email address of the user")
+	createCommand.Flags().StringVarP(&password,	"password",	"",	"",	"password for the user")
+	createCommand.Flags().StringVarP(&name,		"name",		"",	"",	"full name of the user")
+	createCommand.Flags().StringVarP(&clientId,	"clientid",	"",	"",	"aws cognito client id")
 	createCommand.Flags().StringVarP(&awsRegion,	"region",	"",	"",	"aws region the conginot account resides in")
 	
 	command.AddCommand(createCommand)
