@@ -47,6 +47,27 @@ func main() {
 	command.AddCommand(createCommand)
 
 
+	loginCommand := &cobra.Command{
+		Use: "login [params]",
+		Short: "Create a login session",
+		Long: "Create a login session",
+		Run: func(cmd *cobra.Command, args []string) {
+			config := CognitoConfig{
+				ClientId: clientId,
+				AwsRegion: awsRegion,
+			}
+
+			Login(email, password, config)
+		},
+	}
+
+	loginCommand.Flags().StringVarP(&email,		"email",	"",	"",	"email address of the user")
+	loginCommand.Flags().StringVarP(&password,	"password",	"",	"",	"password for the user")
+	loginCommand.Flags().StringVarP(&clientId,	"clientid",	"",	"",	"aws cognito client id")
+	loginCommand.Flags().StringVarP(&awsRegion,	"region",	"",	"",	"aws region the conginot account resides in")
+
+	command.AddCommand(loginCommand)
+
 	if err := command.Execute(); err != nil {
 		log.Fatal(err)
 		os.Exit(-1)
