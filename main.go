@@ -15,6 +15,8 @@ func main() {
 	var clientId string
 	var awsRegion string
 	var refreshToken string
+	var userPoolID string
+	var token string
 
 	command := &cobra.Command{
 		Use: "qndcognito",
@@ -89,6 +91,26 @@ func main() {
 	refreshCommand.Flags().StringVarP(&awsRegion,		"region",	"",	"",	"aws region the conginot account resides in")
 
 	command.AddCommand(refreshCommand)
+
+	validateCommand := &cobra.Command{
+		Use: "validate [params]",
+		Short: "",
+		Long: "",
+		Run: func (cmd *cobra.Command, args []string) {
+			config := CognitoConfig{
+				AwsRegion: awsRegion,
+				UserPoolID: userPoolID,
+			}
+
+			Verify(token, config)
+		},
+	}
+
+	validateCommand.Flags().StringVarP(&token,	"token",	"",	"", 	"JWT token")
+	validateCommand.Flags().StringVarP(&userPoolID,	"userpoolid",	"",	"",	"ID for the Cognito UserPool")
+	validateCommand.Flags().StringVarP(&awsRegion,	"region",	"",	"",	"AWS region the Cognito account resides in")
+
+	command.AddCommand(validateCommand)
 
 	if err := command.Execute(); err != nil {
 		log.Fatal(err)
